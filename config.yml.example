@@ -1,0 +1,77 @@
+notifications:
+  front-door-unlocked: 
+    text: "Front door is unlocked"
+    voice: "The front door has been unlocked"
+    text-enabled: True
+    voice-enabled: False
+    camera: frontyard
+    snapshot: True
+  back-door-unlocked: 
+    text: "Back door is unlocked"
+    voice: "The back door has been unlocked"
+    text-enabled: True
+    voice-enabled: False
+    camera: backporch
+    snapshot: True
+  front-gate-buzzed:
+    text: "Gate has been buzzed"
+    voice: "The front gate has been buzzed open"
+    text-enabled: True
+    voice-enabled: False
+    camera: doorbell
+    snapshot: True
+  harper-home:
+    text: "Harper is home"
+    voice: "Harper has arrived home"
+    text-enabled: True
+    voice-enabled: True
+    snapshot: False
+  hiromi-home:
+    text: "Hiromi is home"
+    voice: "Hiromi has arrived home"
+    text-enabled: True
+    voice-enabled: True
+    snapshot: False
+  doorbell:
+    text: "Doorbell rung!"
+    voice: "Ding Dong! Someone has rang the doorbell!"
+    text-enabled: True
+    voice-enabled: True
+    camera: doorbell
+    snapshot: True
+
+targets:
+    phones:
+        - +17734697666
+        - +13129299356
+    google-home:
+        office: Google-Home-xx
+        media-room: Google-Home-xx
+        bedroom: Google-Home-xx
+        kitchen: Google-Home-xx
+        cast-group: Google-Cast-Group-xx-1
+
+
+credentials:
+    imgur:
+      AccessToken: xx
+      RefreshToken: xx
+      ClientID: xx
+      ClientSecret: xx
+      album: rhevp
+    aws:
+      accessKeyId: xx
+      secretAccessKey: xx
+      region: us-east-1
+      bucket: reedazawa
+    twilio:
+      accountSid: xx
+      authToken: xx
+      from: "+xx"
+
+cameras:
+  entryway:
+      title: "Entryway Camera"
+      name: "entryway.gif"
+      url: "http://192.168.200.12/snap.jpeg"
+      frames: 2
