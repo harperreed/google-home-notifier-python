@@ -110,9 +110,6 @@ var grabSnapshot = function(cameraName){
         mms(message, url)
     });
 
-    
-
-
 
 }
 
