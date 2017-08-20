@@ -4,8 +4,8 @@ const express = require('express');
 const googlehome = require('google-home-notifier');
 const yaml = require('js-yaml');
 const fs   = require('fs');
-const twilio = require('twilio');
-const AWS = require('aws-sdk');
+
+
 const request = require('request');
 const moment = require('moment');
 const winston = require('winston')
@@ -30,88 +30,19 @@ var logger = new (winston.Logger)({
 /* FUNCTION */
 
 var speak = function(text, callback) { 
-    logger.info("sending notification to google home")
+    logger.info("sending text notification to google home")
     googlehome.notify(text, function(res) {
         logger.debug(res);
     });  
 };
  
-
-var text = function(text, callback) { 
-    logger.info("sending sms")
-    notificationConfig['targets']['phones'].forEach(function(to_number) {
-        client.messages.create({
-            body: text,
-            to: to_number,  // Text this number
-            from: notificationConfig['credentials']['twilio']['from'] // From a valid Twilio number
-        })
-        .then((message) => logger.debug(message.sid));   
-    });    
+var play = function(url, callback) { 
+    logger.info("sending mp3 notification to google home")
+    googlehome.play(url, function(res) {
+        logger.debug(res);
+    }); 
 };
-
-var mms = function(text, mediaUrl, callback) { 
-    logger.info("sending mms")
-    notificationConfig['targets']['phones'].forEach(function(to_number) {
-        client.messages.create({
-            body: text,
-            to: to_number,  // Text this number
-            mediaUrl: mediaUrl,
-            from: notificationConfig['credentials']['twilio']['from'] // From a valid Twilio number
-
-        })
-        .then((message) => logger.debug(message.sid));   
-    });    
-};
-
-var put_from_url = function(url, bucket, key, callback) {
-    logger.debug("uploading url: " + url + " to " + bucket + " as " + key)
-    request({
-        url: url,
-        encoding: null
-    }, function(err, res, body) {
-        if (err)
-            return callback(err, res);
-
-        s3.putObject({
-            Bucket: bucket,
-            Key: key,
-            ContentType: res.headers['content-type'],
-            ContentLength: res.headers['content-length'],
-            Body: body // buffer
-        }, callback);
-    })
-}
-
-var grabSnapshot = function(cameraName){
-    logger.info("Sending snapshot")
-    var now = moment();
-    var timestamp = now.format("X")
-
-    var camera = notificationConfig['cameras'][cameraName]
-    var bucket = notificationConfig['credentials']['aws']['bucket']
-    var key = cameraName + '/'+ timestamp +'.png'
-    const signedUrlExpireSeconds = 60 * 5
-
-    logger.debug("uploading to s3")
-    put_from_url(camera['url'], bucket, key, function(err, res) {
-        if (err) {
-            winston.log('error',"Error downloading or saving to s3")
-            return
-        }
-        logger.debug("generate url from s3")
-        const url = s3.getSignedUrl('getObject', {
-            Bucket: bucket,
-            Key: key,
-            Expires: signedUrlExpireSeconds
-        })
-        var message = " 📷 " + camera["title"] + " @ " + now.format('h:mm a on ddd, MMM D')
-        logger.debug("sending snapshot with message: " + message)
-        logger.debug("sending mms")
-        mms(message, url)
-    });
-
-
-}
+ 
 
 /* Grab Config */
 
@@ -123,25 +54,6 @@ try {
 } catch (e) {
   winston.log('error', e);
 }
-
-
-/* Let's instantiate some good things */
-
-
-var client = new twilio(notificationConfig['credentials']['twilio']['accountSid'], notificationConfig['credentials']['twilio']['authToken']);
-
-
-AWS.credentials = new AWS.Credentials();
-AWS.credentials.accessKeyId = notificationConfig['credentials']['aws']['accessKeyId'];
-AWS.credentials.secretAccessKey = notificationConfig['credentials']['aws']['secretAccessKey'];
-
-AWS.config = new AWS.Config();
-AWS.config.region = notificationConfig['credentials']['aws']['region'];
-
-var s3 = new AWS.S3();
-
-/* Set up google home */
-
 
 googlehome.device('Google-Home'); // Change to your Google Home name
 
@@ -166,22 +78,15 @@ app.get('/notifi/:notificationId', (req, res) => {
     var notificationId = req.params['notificationId']
     var notification = notificationConfig['notifications'][notificationId];
 
-    if (notification['text-enabled']){
-        logger.info("text:" +  notification['text'])
-        text(notification['text'])
-    }
-
+    logger.info(notification)
     if (notification['voice-enabled']){
+      if (notification['mp3']){
+        var mp3_url = req.protocol + '://' + req.get('host') + "/" + notification['mp3']
+        play(mp3_url)
+      }else{
         logger.info("voice:" +  notification['voice'])
         speak(notification['voice'])
-    }
-
-
-    if (notification['snapshot']){
-        logger.info("Sending a snapshot: " + notification['camera'])
-        
-        grabSnapshot(notification['camera']);
-
+        }
     }
 
     res.send(notificationId);
@@ -199,6 +104,8 @@ app.get('/reload', (req, res) => {
     }
     res.send('Configuration reloaded\n');
 });
+
+app.use(express.static(__dirname + '/static'));
 
 app.listen(PORT, HOST);
 logger.info(`Running on http://${HOST}:${PORT}`);

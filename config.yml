@@ -1,0 +1,28 @@
+notifications:
+  front-door-unlocked: 
+    voice: "The front door has been unlocked"
+    voice-enabled: False
+  back-door-unlocked: 
+    voice: "The back door has been unlocked"
+    voice-enabled: False
+  front-gate-buzzed:
+    voice: "The front gate has been buzzed open"
+    voice-enabled: False
+  harper-home:
+    voice: "Harper has arrived home"
+    voice-enabled: True
+    mp3: JR.mp3
+  hiromi-home:
+    voice: "Hiromi has arrived home"
+    voice-enabled: True
+  doorbell:
+    voice: "Ding Dong! Someone has rang the doorbell!"
+    voice-enabled: True
+    mp3: doorbell.mp3
+targets:
+    google-home:
+        office: Google-Home-0f4af7ed25372b370c3a5eb1e0c1c141
+        media-room: Google-Home-6e8be6daf460c88dd039665f841cccc3
+        bedroom: Google-Home-ae06465affc11bf9fc6021efdc05385e
+        kitchen: Google-Home-4e31643392a663436a029ffae0aa81a0
+        cast-group: Google-Cast-Group-C328BDB2834645CF8ED39F414F842BCB-1

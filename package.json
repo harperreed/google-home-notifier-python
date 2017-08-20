@@ -1,19 +1,16 @@
 {
-  "name": "notifications",
+  "name": "reedazawa-google-home-notifier",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "home.js",
   "dependencies": {
-    "aws-sdk": "^2.94.0",
+    "google-home-notifier": "git+https://github.com/harperreed/google-home-notifier.git",
     "express": "^4.15.3",
-    "google-home-notifier": "^1.0.0",
     "google-tts-api": "^0.0.1",
     "imgur": "^0.2.1",
     "js-yaml": "^3.9.1",
     "moment": "^2.18.1",
     "request": "^2.81.0",
-    "twilio": "^3.6.1",
-    "unix-timestamp": "^0.2.0",
     "winston": "^2.3.1"
   },
   "devDependencies": {},
