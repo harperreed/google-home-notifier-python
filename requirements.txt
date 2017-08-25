@@ -1,0 +1,5 @@
+gTTS==1.2.2
+Flask==0.12.2
+pychromecast==0.8.2
+unicode_slugify==0.1.3
+pathlib==1.0.1
