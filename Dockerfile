@@ -1,18 +1,7 @@
-FROM node:boron
+FROM python:3.6
+COPY . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
 
-# Create app directory
-WORKDIR /usr/src/app
-
-# Install app dependencies
-COPY package.json .
-COPY config.yaml .
-# For npm@5 or later, copy package-lock.json as well
-# COPY package.json package-lock.json .
-
-RUN npm install
-
-# Bundle app source
-COPY . .
-
-EXPOSE 8080
-CMD [ "npm", "start" ]
+ENTRYPOINT ["python"]
+CMD ["main.py"]
