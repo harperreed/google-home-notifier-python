@@ -11,20 +11,26 @@ This is a webservice that has two endpoints:
 - /play/ - plays an mp3 on the google home that is in the static folder
 - /say/ - uses googles unofficial google translate TTS service to say a notification
 
-# How
+# use
 
 ## getting started
 
 This uses flask and you should just be able to install the requirements: `pip install -r requirements.txt` and then run the webservice `python main.py`
 
+You will have to edit `main.py` and change the `device_name` to one of your google home device's name. If you have more than 1 google home, I would recommend you put all your google homes into a play group and place the play groups name in the `device_name` variable. 
+
 ## running for real
 
 I use docker to run it. It works pretty well. I even included some pretty good docker script that will make it easier. Please check that out for more help. 
 
+# How
+
+Google homes are just chromecasts! Who knew! You just have to treat them like chromecasts. They show up when you browse for chromecasts via python or any other code library. You can then just send audio their way. 
+
 # TODO
 
 * Break out the google home bits and make it easy to integrate into other projects and not just a webservice
-* It may have some hardcoded parts for my specific install of google homes (specifically a play group)
+
 
 
 # HMU
