@@ -19,6 +19,20 @@ This uses flask and you should just be able to install the requirements: `pip in
 
 You will have to edit `main.py` and change the `device_name` to one of your google home device's name. If you have more than 1 google home, I would recommend you put all your google homes into a play group and place the play groups name in the `device_name` variable. 
 
+## URLs
+
+`/play/mp3name.mp3`
+
+This will play mp3name.mp3 over the google homes. I put two mp3s in the static dir for you to try out: JR.mp3 and doorbell1.mp3. Try them: `/play/JR.mp3` or `/play/doorbell1.mp3`
+
+`/say/?text=Oh My God this is awesome`
+
+Just pass a GET variable to the `/say/` endpoint and the google homes will say your text. It also caches this so that the second time it will be a bit quicker than the first time. yay. 
+
+You can also do other languages too: 
+
+`/say/?text=猿も木から落ちる&lang=ja` 
+
 ## running for real
 
 I use docker to run it. It works pretty well. I even included some pretty good docker script that will make it easier. Please check that out for more help. 
