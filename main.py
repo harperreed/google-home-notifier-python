@@ -10,11 +10,12 @@ from urllib.parse import urlparse
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+chromecast_name = "Home group" #edit me to be your google home group
 
 app = Flask(__name__)
 logging.info("Starting up chromecasts")
 chromecasts = pychromecast.get_chromecasts()
-cast = next(cc for cc in chromecasts if cc.device.friendly_name == "Home group")
+cast = next(cc for cc in chromecasts if cc.device.friendly_name == chromecast_name)
 
 def play_tts(text, lang='en', slow=False):
     tts = gTTS(text=text, lang=lang, slow=slow)
