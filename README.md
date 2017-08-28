@@ -1,6 +1,6 @@
 # A notification server that sends notifications to Google Home
 
-This is pretty simple. I had started using [noelportugal's node Google Home Notifier](https://github.com/noelportugal/google-home-notifier) but was having some issues with stability. 
+This is pretty simple. I had started using [noelportugal's really great node Google Home Notifier](https://github.com/noelportugal/google-home-notifier) but was having some issues with stability. 
 
 I decided to write it in a language i know a bit better - python! yay. Python is your friend. 
 
