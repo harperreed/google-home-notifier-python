@@ -1,0 +1,9 @@
+version: '2'
+services:
+  home-notifier:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: home-notifier
+    restart: unless-stopped
+    network_mode: host
