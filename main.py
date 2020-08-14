@@ -14,7 +14,7 @@ chromecast_name = "Home group" #edit me to be your google home group
 
 app = Flask(__name__)
 logging.info("Starting up chromecasts")
-chromecasts = pychromecast.get_chromecasts()
+chromecasts, _ = pychromecast.get_chromecasts()
 cast = next(cc for cc in chromecasts if cc.device.friendly_name == chromecast_name)
 
 def play_tts(text, lang='en', slow=False):
