@@ -2,6 +2,7 @@ from flask import Flask, request
 import socket
 import pychromecast
 import logging
+import os
 from gtts import gTTS
 from slugify import slugify
 from pathlib import Path
@@ -10,7 +11,7 @@ from urllib.parse import urlparse
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-chromecast_name = "Home group" #edit me to be your google home group
+chromecast_name = os.getenv('GRP_NAME') #set envar to match your speaker or group name
 
 app = Flask(__name__)
 logging.info("Starting up chromecasts")
