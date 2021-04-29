@@ -1,3 +1,5 @@
 node_modules
 npm-debug.log
 static/*.mp3
+.vscode
+__pycache__
