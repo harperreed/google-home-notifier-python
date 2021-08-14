@@ -1,5 +1,4 @@
 from flask import Flask, request
-import socket
 import pychromecast
 import logging
 import os
@@ -16,13 +15,14 @@ chromecast_name = os.getenv('GRP_NAME') #set envar to match your speaker or grou
 app = Flask(__name__)
 logging.info("Starting up chromecasts")
 chromecasts, _ = pychromecast.get_chromecasts()
+logging.info("Searching for {}".format(chromecast_name))
 cast = next(cc for cc in chromecasts if cc.device.friendly_name == chromecast_name)
 
 def play_tts(text, lang='en', slow=False):
     tts = gTTS(text=text, lang=lang, slow=slow)
     filename = slugify(text+"-"+lang+"-"+str(slow)) + ".mp3"
     path = "/static/cache/"
-    cache_filename = "." + path + filename
+    cache_filename = os.path.dirname(__file__) + path + filename
     tts_file = Path(cache_filename)
     if not tts_file.is_file():
         logging.info(tts)
@@ -39,6 +39,8 @@ def play_mp3(mp3_url):
     cast.wait()
     mc = cast.media_controller
     mc.play_media(mp3_url, 'audio/mp3')
+    mc.block_until_active()
+
 
 @app.route('/static/<path:path>')
 def send_static(path):
@@ -47,7 +49,7 @@ def send_static(path):
 @app.route('/play/<filename>')
 def play(filename):
     urlparts = urlparse(request.url)
-    mp3 = Path("./static/"+filename)
+    mp3 = Path(os.path.dirname(__file__) + "/static/" + filename)
     if mp3.is_file():
         play_mp3("http://"+urlparts.netloc+"/static/"+filename)
         return filename
