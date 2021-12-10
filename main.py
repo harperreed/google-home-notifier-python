@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-chromecast_name = "Not Merrill's Group" #os.getenv('GRP_NAME') #set envar to match your speaker or group name
+chromecast_name =  os.getenv('GRP_NAME') #set envar to match your speaker or group name
 
 app = Flask(__name__)
 logging.info("Starting up chromecasts")
