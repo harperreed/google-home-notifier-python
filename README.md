@@ -17,7 +17,7 @@ This is a webservice that has two endpoints:
 
 This uses flask and you should just be able to install the requirements: `pip install -r requirements.txt` and then run the webservice `python main.py`
 
-You will have to edit `main.py` and change the `device_name` to one of your google home device's name. If you have more than 1 google home, I would recommend you put all your google homes into a play group and place the play groups name in the `device_name` variable. 
+You will have to edit `main.py` and change the `chromecast_name` to one of your google home device's name. If you have more than 1 google home, I would recommend you put all your google homes into a play group and place the play groups name in the `device_name` variable. 
 
 ## URLs
 
